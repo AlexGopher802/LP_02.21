@@ -19,6 +19,11 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Авторизации сотрудников
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEntry_Click(object sender, EventArgs e)
         {
             DataSet ds = myClass.getData($"select * from Sotrudnik where Email='{tbEmail.Text}' and Password='{tbPassword.Text}'");
@@ -33,26 +38,14 @@ namespace LP02_21_Release
             }
         }
 
+        /// <summary>
+        /// При закрытии формы - открывается предыдущая
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EnterForSotrudnik_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.OpenForms["Main"].Show();
         }
-
-        private void btnEntry_Click_1(object sender, EventArgs e)
-        {
-            DataSet ds = myClass.getData($"select * from Sotrudnik where Email='{tbEmail.Text}' and Password='{tbPassword.Text}'");
-            if (ds.Tables[0].Rows.Count == 0)
-            {
-                MessageBox.Show("Неправильный логин и/или пароль", "Error");
-            }
-            else
-            {
-                this.Hide();
-                Sotrudnik form = new Sotrudnik();
-                form.Show();
-            }
-        }
-
-
     }
 }

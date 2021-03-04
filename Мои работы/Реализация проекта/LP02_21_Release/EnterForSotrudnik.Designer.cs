@@ -118,7 +118,7 @@
             this.btnEntry.TabIndex = 3;
             this.btnEntry.Text = "Вход";
             this.btnEntry.UseVisualStyleBackColor = true;
-            this.btnEntry.Click += new System.EventHandler(this.btnEntry_Click_1);
+            this.btnEntry.Click += new System.EventHandler(this.btnEntry_Click);
             // 
             // EnterForSotrudnik
             // 

@@ -19,6 +19,11 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// При закрытии окна - открывается предыдущее
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddFlight_FormClosed(object sender, FormClosedEventArgs e)
         {
             Flights form = (Flights)Application.OpenForms["Flights"];
@@ -26,16 +31,28 @@ namespace LP02_21_Release
             form.Show();
         }
 
+        /// <summary>
+        /// Метод валидации формы (обязательные поля должны быть заполнены)
+        /// </summary>
+        /// <returns></returns>
         bool validForm()
         {
-            return true;
+            if((tbFrom.Text != "") && (tbTo.Text != "") && (tbCost.Text != "") && (cbAircrafts.SelectedItem != null))
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Некорректный ввод", "Ошибка");
+                return false;
+            }
         }
 
-        void clearForm()
-        {
-
-        }
-
+        /// <summary>
+        /// Подтверждение добавления нового рейса
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             if (!validForm()) { return; }
@@ -46,8 +63,8 @@ namespace LP02_21_Release
                     $"('{tbFrom.Text}', '{tbTo.Text}', '{dateTimePicker.Value}', {tbCost.Text}, " +
                     $"(select ID from Samolet where Naimenovanie='{cbAircrafts.SelectedItem}'))");
 
-                clearForm();
                 MessageBox.Show("Рейс успешно добавлен", "Успех");
+                this.Close();
             }
             catch(Exception excep)
             {
@@ -55,6 +72,11 @@ namespace LP02_21_Release
             }
         }
 
+        /// <summary>
+        /// При открытии формы - загружается список самолётов в комбо-бокс
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddFlight_Load(object sender, EventArgs e)
         {
             cbAircrafts.DataSource = myClass.GetListItems("select Naimenovanie from Samolet");

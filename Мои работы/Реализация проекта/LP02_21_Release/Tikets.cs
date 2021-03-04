@@ -19,6 +19,11 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// При открытии окна - загружается информация о всех билетах
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tikets_Load(object sender, EventArgs e)
         {
             dataGridTikets.DataSource = myClass.getData($"select " +
@@ -35,6 +40,11 @@ namespace LP02_21_Release
                 $"left join Reis on Bilet.IDReis = Reis.ID ").Tables[0];
         }
 
+        /// <summary>
+        /// При закрытии окна - открывается предыдущее
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tikets_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.OpenForms["Sotrudnik"].Show();

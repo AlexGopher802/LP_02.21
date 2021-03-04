@@ -13,6 +13,7 @@ namespace LP02_21_Release
     public partial class TiketConfirm : Form
     {
         public int reisID = 0;
+        public int klientID = 0;
         DataClass myClass = new DataClass();
 
         public TiketConfirm()
@@ -20,6 +21,11 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// При загрузке окна - заполняем форму информацией о клиенте и рейсе
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TiketConfirm_Load(object sender, EventArgs e)
         {
             tbLastName.Text = dataGridFIO.Rows[0].Cells["Family"].Value.ToString();
@@ -35,19 +41,41 @@ namespace LP02_21_Release
             tbQuantityFree.Text = (quantityPlace - quantityTickets).ToString();
         }
 
+        /// <summary>
+        /// При закрытии окно - открываем предыдущее
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TiketConfirm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.OpenForms["BuyTiket"].Show();
         }
 
+        /// <summary>
+        /// Если есть свободные места на самолёте - оформляет билет и заносит его в БД
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
-
-        }
-
-        bool checkFree()
-        {
-            return true;
+            if(tbQuantityFree.Text != "0")
+            {
+                try
+                {
+                    myClass.executeQuery($"insert into Bilet(DateVormirovaniya, Summa, IDKlient, IDReis) values " +
+                        $"('{DateTime.Now}', {tbSumma.Text}, {klientID}, {reisID})");
+                    MessageBox.Show("Билет куплен", "Успех");
+                    this.Close();
+                }
+                catch(Exception excep)
+                {
+                    MessageBox.Show(excep.Message, "Ошибка");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Свободных мест нету.", "Ошибка");
+            }
         }
     }
 }

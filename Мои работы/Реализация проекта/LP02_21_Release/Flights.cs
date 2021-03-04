@@ -20,6 +20,9 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Метод отображения информации о рейсах в таблице
+        /// </summary>
         public void showDataFlights()
         {
             dataGridFlights.DataSource = myClass.getData($"select " +
@@ -35,22 +38,40 @@ namespace LP02_21_Release
             dataGridFlights.Columns[5].Visible = false;
         }
 
+        /// <summary>
+        /// При открытии окна - загружается информация о рейсах в таблицу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Flights_Load(object sender, EventArgs e)
         {
             showDataFlights();
         }
 
+        /// <summary>
+        /// При закрытии формы - открывается предыдущая
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Flights_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.OpenForms["Sotrudnik"].Show();
         }
 
+        /// <summary>
+        /// Вызывает форму добавления нового рейса
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddFlight_Click(object sender, EventArgs e)
         {
             this.Hide();
             new AddFlight().Show();
         }
 
+        /// <summary>
+        /// Метод фильтрации рейсов по городу отправления и городу прибытия
+        /// </summary>
         void filtredData()
         {
             if (tbFrom.Text != "")
@@ -67,6 +88,11 @@ namespace LP02_21_Release
             where = "";
         }
 
+        /// <summary>
+        /// Применения фильтрации таблицы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             filtredData();

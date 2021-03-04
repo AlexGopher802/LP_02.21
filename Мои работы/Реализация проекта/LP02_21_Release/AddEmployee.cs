@@ -18,17 +18,29 @@ namespace LP02_21_Release
         {
             InitializeComponent();
         }
-
+        
+        /// <summary>
+        /// Метод валидации формы (обязательные поля должны быть заполнены)
+        /// </summary>
+        /// <returns></returns>
         bool validForm()
         {
-            return true;
+            if((tbLastName.Text != "") && (tbFirstName.Text != "") && (tbEmail.Text != "") && (tbPassword.Text != "") && (cbPost.SelectedItem != null))
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Некорректный ввод", "Ошибка");
+                return false;
+            }
         }
 
-        void clearForm()
-        {
-
-        }
-
+        /// <summary>
+        /// Подтверждение добавления сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             if (!validForm()) { return; }
@@ -42,8 +54,8 @@ namespace LP02_21_Release
                     $"(select top (1) ID from LichnieDannie order by ID desc), " +
                     $"(select ID from Doljnost where Naimenovanie='{cbPost.SelectedItem.ToString()}'))");
 
-                clearForm();
                 MessageBox.Show("Сотрудник успешно добавлен", "Успех");
+                this.Close();
             }
             catch(Exception excep)
             {
@@ -51,6 +63,11 @@ namespace LP02_21_Release
             }
         }
 
+        /// <summary>
+        /// При закрытии окна - открывается предыдущее
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddEmployee_FormClosed(object sender, FormClosedEventArgs e)
         {
             Employee form = (Employee)Application.OpenForms["Employee"];
@@ -58,6 +75,11 @@ namespace LP02_21_Release
             form.Show();
         }
 
+        /// <summary>
+        /// При загрузке формы - заполняется комбо-бокс с должностями
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddEmployee_Load(object sender, EventArgs e)
         {
             cbPost.DataSource = myClass.GetListItems("select Naimenovanie from Doljnost");

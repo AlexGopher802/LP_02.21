@@ -20,6 +20,11 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Авторизация клиента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEntry_Click(object sender, EventArgs e)
         {
             DataSet ds = myClass.getData($"select * from Klient where Email='{tbEmail.Text}' and Password='{tbPassword.Text}'");
@@ -36,6 +41,11 @@ namespace LP02_21_Release
             }
         }
 
+        /// <summary>
+        /// При закрытии окна - открывается предыдущее
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Enter_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.OpenForms["Main"].Show();

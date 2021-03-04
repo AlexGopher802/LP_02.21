@@ -19,17 +19,30 @@ namespace LP02_21_Release
             InitializeComponent();
         }
 
+        /// <summary>
+        /// При закрытии формы - открывается предыдущая
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Employee_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.OpenForms["Sotrudnik"].Show();
         }
 
+        /// <summary>
+        /// Вызов формы добавления нового сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
             this.Hide();
             new AddEmployee().Show();
         }
 
+        /// <summary>
+        /// Метод отображения информации о сотрудниках в таблицу
+        /// </summary>
         public void showDataEmployee()
         {
             dataGridEmployees.DataSource = myClass.getData($"select " +
@@ -46,11 +59,21 @@ namespace LP02_21_Release
             dataGridEmployees.Columns[6].Visible = false;
         }
 
+        /// <summary>
+        /// При открытии окна - загружается таблица
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Employee_Load(object sender, EventArgs e)
         {
             showDataEmployee();
         }
 
+        /// <summary>
+        /// Метод удаления выбранного сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDeleteEmployee_Click(object sender, EventArgs e)
         {
             if(dataGridEmployees.SelectedRows.Count == 0) { MessageBox.Show("Ничего не выбрано", "Ошибка"); return; }
